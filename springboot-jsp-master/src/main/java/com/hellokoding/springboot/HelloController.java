@@ -19,11 +19,6 @@ public class HelloController {
         return "login";
     }
 
-    @RequestMapping(value="/login", method=RequestMethod.POST)
-    public String recoverPass(@RequestParam("userName") String username, @RequestParam("password") String password) {
-        return "login";
-    }
-
     @RequestMapping("/home")
     public String index() {
         return "index";
