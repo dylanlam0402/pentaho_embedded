@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +57,14 @@
                 <li><a href="#">Pentaho</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <c:choose>
+                    <c:when test="${username.equals('')}">
+                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        hello ${username}
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
