@@ -3,6 +3,7 @@ package com.hellokoding.springboot;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -11,5 +12,20 @@ public class HelloController {
     public String hello(Model model, @RequestParam(value="name", required=false, defaultValue="World") String name) {
         model.addAttribute("name", name);
         return "hello";
+    }
+
+    @RequestMapping("/")
+    public String login() {
+        return "login";
+    }
+
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+    public String recoverPass(@RequestParam("userName") String username, @RequestParam("password") String password) {
+        return "login";
+    }
+
+    @RequestMapping("/home")
+    public String index() {
+        return "index";
     }
 }
