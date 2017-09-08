@@ -4,6 +4,7 @@
 
 <t:layout>
     <jsp:body>
+
         <h1>Home page </h1>
         <h2>  <c:choose>
             <c:when test="${username.equals('')}">
@@ -12,5 +13,6 @@
                 hello ${username}
             </c:otherwise>
         </c:choose></h2>
+
     </jsp:body>
 </t:layout>
