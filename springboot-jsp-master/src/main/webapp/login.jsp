@@ -8,9 +8,9 @@
 <link href="/css/app.css" rel="stylesheet" type="text/css">
 <script src="/js/app.js"></script>
 <div class="login-page">
-    <div class="form">
+    <div class="form" name="${user}">
         <form class="register-form">
-            <input type="text" placeholder="name"/>
+            <input type="text" placeholder="name" name="${user.username}"/>
             <input type="password" placeholder="password"/>
             <input type="text" placeholder="email address"/>
             <button>create</button>

@@ -14,11 +14,6 @@ public class HelloController {
         return "hello";
     }
 
-    @RequestMapping("/")
-    public String login() {
-        return "login";
-    }
-
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String recoverPass(@RequestParam("userName") String username, @RequestParam("password") String password) {
         return "login";
@@ -26,6 +21,6 @@ public class HelloController {
 
     @RequestMapping("/home")
     public String index() {
-        return "index";
+        return "home";
     }
 }
