@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/home")
-public class HomeController {
+public class HomeController extends BaseController {
 
     @RequestMapping
     public String home(Model model,@RequestParam(required=false) String username) {

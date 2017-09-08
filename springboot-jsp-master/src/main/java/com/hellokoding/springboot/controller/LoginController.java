@@ -3,6 +3,7 @@ package com.hellokoding.springboot.controller;
 import com.hellokoding.springboot.domain.User;
 import com.hellokoding.springboot.service.UserService;
 import com.hellokoding.springboot.utils.EncryptionUtil;
+import com.hellokoding.springboot.utils.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * Created by congle on 9/7/2017.
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -31,6 +32,7 @@ public class LoginController {
         if (user == null){
             return "login";
         }
+        SecurityContextHolder.setCurrentUser(user);
         HttpSession session = request.getSession(true);
         session.setAttribute("email",user.getEmail());
         session.setMaxInactiveInterval(3*60);

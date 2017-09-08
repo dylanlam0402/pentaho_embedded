@@ -22,7 +22,10 @@
 </head>
 <body>
 <div id="pageheader">
-    <h1>Welcome</h1>
+
+    <jsp:invoke fragment="header"/>
+</div>
+<div id="body">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -55,9 +58,6 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>
-    <jsp:invoke fragment="header"/>
-</div>
-<div id="body">
     <div class="container">
         <jsp:doBody/>
     </div>

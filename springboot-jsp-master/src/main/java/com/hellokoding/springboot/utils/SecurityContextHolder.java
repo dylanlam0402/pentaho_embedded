@@ -5,7 +5,7 @@ import com.hellokoding.springboot.domain.User;
 /**
  * Created by kietlam on 9/7/2017.
  */
-public final class SecurityHolder {
+public final class SecurityContextHolder {
     private static final ThreadLocal<User> currentUserHolder = new ThreadLocal<>();
 
     public static User getCurrentUser() {
