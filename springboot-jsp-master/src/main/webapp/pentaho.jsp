@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: kietlam
@@ -11,6 +12,20 @@
 
 <t:layout>
     <jsp:body>
-      <iframe src="http://localhost:8080/pentaho/api/repos/%3Ahome%3Aadmin%3Asingle_page.wcdf/generatedContent"></iframe>
+        <script>
+            var authen = "<c:out value = "${authentication}"/>"
+            $(document).ready(function () {
+                if(authen!="")
+                {
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/pentaho/api/repo/files/%3A/tree?depth",
+                        headers :{"Authorization":authen}
+                    });
+                    $("#output_iframe_id").attr('src',"http://localhost:8080/pentaho/api/repos/%3Ahome%3Aadmin%3AChild.wcdf/generatedContent");
+                }
+            })
+        </script>
+        <iframe id="output_iframe_id" src=""></iframe>
     </jsp:body>
 </t:layout>

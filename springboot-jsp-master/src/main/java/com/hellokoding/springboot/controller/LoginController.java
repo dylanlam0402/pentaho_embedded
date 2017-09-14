@@ -32,7 +32,7 @@ public class LoginController extends BaseController {
         if (user == null){
             return "login";
         }
-        SecurityContextHolder.setCurrentUser(user);
+      //  SecurityContextHolder.setCurrentUser(user);
         HttpSession session = request.getSession(true);
         session.setAttribute("email",user.getEmail());
         session.setMaxInactiveInterval(3*60);
