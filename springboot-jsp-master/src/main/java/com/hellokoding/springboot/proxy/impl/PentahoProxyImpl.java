@@ -4,6 +4,7 @@ import com.hellokoding.springboot.domain.User;
 import com.hellokoding.springboot.proxy.PentahoProxy;
 import com.hellokoding.springboot.utils.Constant;
 import com.hellokoding.springboot.utils.SecurityContextHolder;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 import java.io.InputStreamReader;
 import java.net.CookieManager;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 
 import java.net.URL;
@@ -20,6 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.hellokoding.springboot.utils.Constant.COOKIES_HEADER;
 
 /**
  * Created by kietlam on 9/11/2017.
@@ -31,8 +35,13 @@ public class PentahoProxyImpl implements PentahoProxy {
         HttpURLConnection urlConnection ;
         URL url = new URL(urlStr);
         urlConnection = (HttpURLConnection) url.openConnection();
+        String userName = user.getEmail();
+        String authorization = userName+":password";
+        byte[] encodedBytes = Base64.encodeBase64(authorization.getBytes());
+        String validAuthorization = new String(encodedBytes);
+        String authorizarionHeader = "Basic "+validAuthorization;
         urlConnection.setRequestProperty("Accept","application/json");
-        urlConnection.setRequestProperty("Authorization","Basic YWRtaW46cGFzc3dvcmQ=");
+        urlConnection.setRequestProperty("Authorization",authorizarionHeader);
         return urlConnection;
 
     }
@@ -67,30 +76,24 @@ public class PentahoProxyImpl implements PentahoProxy {
     }
 
     @Override
-    public String getCookieFromResponse() {
+    public String getCookieFromResponse(User user) {
         HttpURLConnection urlConnection = null;
         try {
-            urlConnection = initHttpConnection(Constant.ALL_DASHBOARD_API, null);
+            urlConnection = initHttpConnection(Constant.ALL_DASHBOARD_API, user);
             urlConnection.setRequestMethod("GET");
         } catch (IOException e) {
             e.printStackTrace();
         }
         Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
-        Set<String> headerFieldsSet = headerFields.keySet();
-        Iterator<String> hearerFieldsIter = headerFieldsSet.iterator();
-        String cookie = "";
-        while (hearerFieldsIter.hasNext()) {
-            String headerFieldKey = hearerFieldsIter.next();
-            if ("Set-Cookie".equalsIgnoreCase(headerFieldKey)) {
-                List<String> headerFieldValue = headerFields.get(headerFieldKey);
-                for (String headerValue : headerFieldValue) {
-                    String[] fields = headerValue.split(";\\s*");
-                    String cookieValue = fields[0];
-                    cookie = cookieValue;
-                }
-            }
+        List<String> cookiesHeader = headerFields.get("Set-Cookie");
+        if(cookiesHeader != null){
+            String cookie = cookiesHeader.get(0);
+            HttpCookie httpCookie = HttpCookie.parse(cookie).get(0);
+            String name = httpCookie.getName();
+            String value = httpCookie.getValue();
+            String domain = httpCookie.getDomain();
         }
-        return cookie;
+        return null ;
     }
 
 }

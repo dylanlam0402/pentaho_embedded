@@ -32,7 +32,6 @@ public class PentahoService {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization","Basic YWRtaW46YWRtaW4=");
-        //headers.set("Accept","application/json");
 
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 

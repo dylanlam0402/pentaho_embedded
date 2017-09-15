@@ -23,6 +23,9 @@ public class File {
     @JsonProperty("folder")
     private String folder;
 
+    @JsonProperty("title")
+    private String title;
+
     public String getId() {
         return id;
     }
@@ -61,5 +64,13 @@ public class File {
 
     public void setFolder(String folder) {
         this.folder = folder;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

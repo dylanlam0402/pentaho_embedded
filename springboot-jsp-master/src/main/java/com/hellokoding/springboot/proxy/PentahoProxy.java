@@ -11,5 +11,5 @@ import java.net.HttpURLConnection;
 
 public interface PentahoProxy {
     public String getAllDashboardOfCurrentUser(User user);
-    public String getCookieFromResponse();
+    public String getCookieFromResponse(User user);
 }

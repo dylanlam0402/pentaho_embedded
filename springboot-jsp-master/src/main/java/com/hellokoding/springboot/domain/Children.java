@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,34 +17,44 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown=true)
 
 public class Children {
-    @JsonProperty("children")
-    List<Children> children;
 
     @JsonProperty("file")
-    List<File> file;
+    File file;
 
-    public Children(List<Children> childrenList, List<File> fileList) {
+    @JsonProperty("children")
+    List<Children> childrenList;
 
-    }
+    @JsonIgnore
+    public  static List<File> allFilesAndFolders = new ArrayList<>();
 
-    public List<Children> getChildren() {
-        return children;
-    }
-    public void setChildren(List<Children> children) {
-        this.children = children;
-    }
 
-    public List<File> getFile() {
+    public File getFile() {
         return file;
     }
 
-    public void setFile(List<File> file) {
+    public void setFile(File file) {
         this.file = file;
     }
 
-    @JsonIgnore
-    static List<List<File>> allFile = new ArrayList<>();
+    public List<Children> getChildrenList() {
+        return childrenList;
+    }
 
-   
+    public void setChildrenList(List<Children> childrenList) {
+        this.childrenList = childrenList;
+    }
 
+    public static void printTree(Children children){
+        if(children.getFile()!=null)
+        {
+            allFilesAndFolders.add(children.getFile());
+        }
+        if(children.getChildrenList()!=null) {
+            for (Children each : children.getChildrenList()) {
+                if (each != null) {
+                    printTree(each);
+                }
+            }
+        }
+    }
 }

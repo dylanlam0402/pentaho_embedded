@@ -12,10 +12,16 @@
 
 <t:layout>
     <jsp:body>
-        <c:forEach items="${listDashboard}" var="item">
-           <a href="/pentaho/${item.id}"> ${item.name}</a>
-            <br>
-        </c:forEach>
+          <script>
+              $(document).ready(function(){
+                  var path = "${pathReport}";
+                  var src = "http://localhost:8080/pentaho/api/repos/"+path+"/generatedContent"
+                  $("#myIframe").attr("src",src);
+              });
 
+          </script>
+        <div>
+            <iframe id="myIframe"></iframe>
+        </div>
     </jsp:body>
 </t:layout>
