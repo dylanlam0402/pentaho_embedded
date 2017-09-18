@@ -35,6 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookieStore;
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -66,8 +69,16 @@ public class PentahoController extends  BaseController {
         User user = userRepository.findUserByEmail(email);
         pentahoProxy= new PentahoProxyImpl();
 
-        String cookie = pentahoProxy.getCookieFromResponse(user);
-        response.addHeader("Set-Cookie",cookie);
+        CookieManager cookieManager = pentahoProxy.getCookieFromResponse(user);
+        CookieStore cookieStore = cookieManager.getCookieStore();
+        List<HttpCookie> cookies = cookieStore.getCookies();
+        for (HttpCookie cookie : cookies){
+            Cookie cookieLogin = new Cookie(cookie.getName(), cookie.getValue());
+            cookieLogin.setPath(cookie.getPath());
+            cookieLogin.setSecure(cookie.getSecure());
+            cookieLogin.setMaxAge((int) cookie.getMaxAge());
+            response.addCookie(cookieLogin);
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonStr = pentahoProxy.getAllDashboardOfCurrentUser(user);

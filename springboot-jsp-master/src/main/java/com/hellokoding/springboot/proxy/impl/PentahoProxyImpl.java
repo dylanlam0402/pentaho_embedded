@@ -76,8 +76,9 @@ public class PentahoProxyImpl implements PentahoProxy {
     }
 
     @Override
-    public String getCookieFromResponse(User user) {
+    public CookieManager getCookieFromResponse(User user) {
         HttpURLConnection urlConnection = null;
+        CookieManager cookieManager = new CookieManager();
         try {
             urlConnection = initHttpConnection(Constant.ALL_DASHBOARD_API, user);
             urlConnection.setRequestMethod("GET");
@@ -87,13 +88,13 @@ public class PentahoProxyImpl implements PentahoProxy {
         Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
         List<String> cookiesHeader = headerFields.get("Set-Cookie");
         if(cookiesHeader != null){
-            String cookie = cookiesHeader.get(0);
-            HttpCookie httpCookie = HttpCookie.parse(cookie).get(0);
-            String name = httpCookie.getName();
-            String value = httpCookie.getValue();
-            String domain = httpCookie.getDomain();
+            for(String header : cookiesHeader){
+                HttpCookie httpCookie = HttpCookie.parse(header).get(0);
+                cookieManager.getCookieStore().add(null, httpCookie);
+            }
         }
-        return null ;
+
+        return cookieManager;
     }
 
 }
