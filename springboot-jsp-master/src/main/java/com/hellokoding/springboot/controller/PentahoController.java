@@ -105,7 +105,7 @@ public class PentahoController extends  BaseController {
     }
 
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
-    public String getDashboard(@PathVariable("id") String id,HttpServletResponse response, Model model ) {
+    public String getDashboard(@PathVariable("id") String id, Model model ) {
         List<File> allFilesAndFolders = Children.allFilesAndFolders;
         for (File file : allFilesAndFolders){
             if (file.getId().equals(id)){
