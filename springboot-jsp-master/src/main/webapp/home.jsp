@@ -4,15 +4,8 @@
 
 <t:layout>
     <jsp:body>
-
-        <h1>Home page </h1>
-        <h2>  <c:choose>
-            <c:when test="${username.equals('')}">
-            </c:when>
-            <c:otherwise>
-                hello ${username}
-            </c:otherwise>
-        </c:choose></h2>
-
+        <div id="main-content" style="padding-left: 200px; margin-left: 200px; ">
+        <img src="/images/home.jpg" style="width:700px;height:500px;">
+        </div>
     </jsp:body>
 </t:layout>

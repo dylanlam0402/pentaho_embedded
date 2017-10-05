@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2017. KMS Technology, Inc.
- */
-
 package com.hellokoding.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

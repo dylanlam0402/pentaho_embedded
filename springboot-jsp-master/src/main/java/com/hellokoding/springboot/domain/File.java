@@ -73,4 +73,10 @@ public class File {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getNameReport(){
+        String[] reportArray = name.split(".wcdf");
+        String reportName = reportArray[0];
+        return reportName;
+    }
 }
